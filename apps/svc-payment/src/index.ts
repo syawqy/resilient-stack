@@ -1,20 +1,21 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { PORTS } from '@resilient/shared';
-import { simulatePayment } from './simulator';
+import { simulatePayment, setForceFailMode } from './simulator';
 
 const app = new Hono();
 app.use('*', cors());
 
-// Shared config (mutable from gateway updates via a simple in-memory store)
+// Shared config
 let failRate = 0.1;
 let latencyMs = 100;
 
 // Endpoint to update config
 app.post('/config', async (c) => {
-  const body = await c.req.json<{ failRate?: number; latencyMs?: number }>();
+  const body = await c.req.json<{ failRate?: number; latencyMs?: number; forceFail?: boolean }>();
   if (body.failRate !== undefined) failRate = body.failRate;
   if (body.latencyMs !== undefined) latencyMs = body.latencyMs;
+  if (body.forceFail !== undefined) setForceFailMode(body.forceFail);
   return c.json({ success: true, failRate, latencyMs });
 });
 

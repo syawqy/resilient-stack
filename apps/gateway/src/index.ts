@@ -49,8 +49,8 @@ function initLoadBalancers(): void {
 async function propagateConfig(): Promise<void> {
   const svcConfig = currentConfig.services;
   const targets = [
-    { url: `http://localhost:${PORTS.payment}/config`, body: svcConfig.payment },
-    { url: `http://localhost:${PORTS.notification}/config`, body: svcConfig.notification },
+    { url: `http://localhost:${PORTS.payment}/config`, body: { failRate: svcConfig.payment.failRate, latencyMs: svcConfig.payment.latencyMs, forceFail: svcConfig.payment.forceFail } },
+    { url: `http://localhost:${PORTS.notification}/config`, body: { failRate: svcConfig.notification.failRate, latencyMs: svcConfig.notification.latencyMs } },
   ];
   for (const t of targets) {
     try {

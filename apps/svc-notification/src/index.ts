@@ -16,30 +16,28 @@ app.post('/config', async (c) => {
   const body = await c.req.json<{ failRate?: number; latencyMs?: number }>();
   if (body.failRate !== undefined) failRate = body.failRate;
   if (body.latencyMs !== undefined) latencyMs = body.latencyMs;
+  notificationQueue.setConfig(failRate, latencyMs);
   return c.json({ success: true, failRate, latencyMs });
 });
 
-// Send notification
+// Send notification (with retry + DLQ)
 app.post('/notifications/send', async (c) => {
   const body = await c.req.json<{ type: string; message: string }>();
 
   console.log(`[NotificationService] Sending notification: ${body.message}`);
 
-  // Simulate latency
-  await new Promise((resolve) => setTimeout(resolve, latencyMs));
-
   const notification: Notification = {
     id: crypto.randomUUID(),
     type: body.type as Notification['type'],
     message: body.message,
-    status: Math.random() > failRate ? 'sent' : 'failed',
+    status: 'queued',
     createdAt: new Date().toISOString(),
     retryCount: 0,
   };
 
-  notificationQueue.add(notification);
+  const result = await notificationQueue.send(notification);
 
-  return c.json(notification, notification.status === 'failed' ? 500 : 200);
+  return c.json(result, result.status === 'failed' ? 500 : 200);
 });
 
 // List all notifications

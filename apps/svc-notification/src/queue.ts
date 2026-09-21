@@ -4,17 +4,43 @@ class NotificationQueue {
   private notifications: Notification[] = [];
   private deadLetter: Notification[] = [];
   private readonly maxRetries = 3;
+  private failRate = 0.15;
+  private latencyMs = 50;
+
+  setConfig(failRate: number, latencyMs: number): void {
+    this.failRate = failRate;
+    this.latencyMs = latencyMs;
+  }
+
+  async send(notification: Notification): Promise<Notification> {
+    let lastError: string | undefined;
+
+    for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
+      // Simulate latency
+      await new Promise((resolve) => setTimeout(resolve, this.latencyMs));
+
+      // Simulate failure
+      if (Math.random() > this.failRate) {
+        // Success
+        notification.status = 'sent';
+        notification.retryCount = attempt;
+        this.notifications.push(notification);
+        return notification;
+      }
+
+      lastError = `Attempt ${attempt + 1} failed`;
+      notification.retryCount = attempt + 1;
+    }
+
+    // All retries exhausted — move to dead letter
+    notification.status = 'failed';
+    this.deadLetter.push(notification);
+    console.log(`[NotificationQueue] Moved to dead letter: ${notification.id} after ${this.maxRetries} retries`);
+    return notification;
+  }
 
   add(notification: Notification): void {
     this.notifications.push(notification);
-
-    if (notification.status === 'failed') {
-      notification.retryCount++;
-      if (notification.retryCount >= this.maxRetries) {
-        this.deadLetter.push(notification);
-        console.log(`[NotificationQueue] Moved to dead letter: ${notification.id}`);
-      }
-    }
   }
 
   getAll(): Notification[] {

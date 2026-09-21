@@ -46,7 +46,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     description: 'All services running normally',
     config: {
       services: {
-        payment: { failRate: 0.01, latencyMs: 50 },
+        payment: { failRate: 0.01, latencyMs: 50, forceFail: false },
         notification: { failRate: 0.01, latencyMs: 30 },
         order: { failRate: 0.01, latencyMs: 20 },
       },
@@ -57,7 +57,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     description: 'Payment service experiencing failures',
     config: {
       services: {
-        payment: { failRate: 0.8, latencyMs: 500 },
+        payment: { failRate: 0.8, latencyMs: 500, forceFail: false },
         notification: { failRate: 0.01, latencyMs: 30 },
         order: { failRate: 0.01, latencyMs: 20 },
       },
@@ -68,7 +68,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     description: 'All services running slowly under high load',
     config: {
       services: {
-        payment: { failRate: 0.05, latencyMs: 2000 },
+        payment: { failRate: 0.05, latencyMs: 2000, forceFail: false },
         notification: { failRate: 0.05, latencyMs: 1500 },
         order: { failRate: 0.05, latencyMs: 1000 },
       },
@@ -79,7 +79,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     description: 'Cascading failure across all services',
     config: {
       services: {
-        payment: { failRate: 0.7, latencyMs: 1000 },
+        payment: { failRate: 0.7, latencyMs: 1000, forceFail: true },
         notification: { failRate: 0.6, latencyMs: 800 },
         order: { failRate: 0.5, latencyMs: 600 },
       },
@@ -90,7 +90,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     description: 'Notification service unavailable',
     config: {
       services: {
-        payment: { failRate: 0.01, latencyMs: 50 },
+        payment: { failRate: 0.01, latencyMs: 50, forceFail: false },
         notification: { failRate: 1.0, latencyMs: 5000 },
         order: { failRate: 0.01, latencyMs: 20 },
       },
@@ -101,7 +101,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     description: 'Default configuration with moderate error rates',
     config: {
       services: {
-        payment: { failRate: 0.1, latencyMs: 100 },
+        payment: { failRate: 0.1, latencyMs: 100, forceFail: false },
         notification: { failRate: 0.15, latencyMs: 50 },
         order: { failRate: 0.05, latencyMs: 30 },
       },

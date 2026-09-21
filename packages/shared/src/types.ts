@@ -86,6 +86,7 @@ export interface MetricsSnapshot {
 export interface ServiceConfig {
   failRate: number;
   latencyMs: number;
+  forceFail?: boolean;
 }
 
 export interface GatewayConfig {
