@@ -1,0 +1,22 @@
+{
+  "name": "resilient-stack",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"bun run dev:gateway\" \"bun run dev:order\" \"bun run dev:payment\" \"bun run dev:notification\" \"bun run dev:dashboard\"",
+    "dev:gateway": "bun run --cwd apps/gateway dev",
+    "dev:order": "bun run --cwd apps/svc-order dev",
+    "dev:payment": "bun run --cwd apps/svc-payment dev",
+    "dev:notification": "bun run --cwd apps/svc-notification dev",
+    "dev:dashboard": "bun run --cwd apps/dashboard dev",
+    "build": "bun run --cwd apps/dashboard build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "typescript": "^5.7.0",
+    "@types/bun": "latest"
+  }
+}

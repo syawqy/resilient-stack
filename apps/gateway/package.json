@@ -1,0 +1,15 @@
+{
+  "name": "@resilient/gateway",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts"
+  },
+  "dependencies": {
+    "@resilient/shared": "workspace:*",
+    "@resilient/resilience": "workspace:*",
+    "@resilient/cache": "workspace:*",
+    "@resilient/metrics": "workspace:*",
+    "hono": "^4.6.0"
+  }
+}

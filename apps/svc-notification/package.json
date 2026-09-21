@@ -1,0 +1,12 @@
+{
+  "name": "@resilient/svc-notification",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts"
+  },
+  "dependencies": {
+    "@resilient/shared": "workspace:*",
+    "hono": "^4.6.0"
+  }
+}

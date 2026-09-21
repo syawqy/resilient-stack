@@ -1,0 +1,13 @@
+{
+  "name": "@resilient/svc-order",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts"
+  },
+  "dependencies": {
+    "@resilient/shared": "workspace:*",
+    "@resilient/cache": "workspace:*",
+    "hono": "^4.6.0"
+  }
+}
