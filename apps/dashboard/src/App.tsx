@@ -7,6 +7,7 @@ import { ConfigPanel } from './components/ConfigPanel';
 import { LoadTestPanel } from './components/LoadTestPanel';
 import { EventLog } from './components/EventLog';
 import { ScenarioPresets } from './components/ScenarioPresets';
+import { ChaosPanel } from './components/ChaosPanel';
 import { useMetrics, useMetricsHistory } from './hooks/useMetrics';
 
 export function App() {
@@ -39,6 +40,12 @@ export function App() {
       {activeView === 'config' && (
         <div className="config-view">
           <ConfigPanel />
+        </div>
+      )}
+
+      {activeView === 'chaos' && (
+        <div className="chaos-view">
+          <ChaosPanel />
         </div>
       )}
 

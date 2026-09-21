@@ -603,3 +603,15 @@ body {
   display: grid;
   grid-template-columns: 1fr;
 }
+
+/* Chaos Engineering Panel */
+.chaos-panel { padding: 24px; }
+.chaos-section { margin-bottom: 20px; padding: 16px; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+.chaos-section-title { font-size: 13px; font-weight: 600; color: var(--cyan); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.chaos-controls { display: flex; flex-direction: column; gap: 8px; }
+.chaos-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.chaos-stats { padding: 16px; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+.chaos-stat-group { margin-bottom: 12px; }
+.chaos-stat-title { font-size: 12px; font-weight: 600; color: var(--yellow); display: block; margin-bottom: 6px; }
+.chaos-stat-row { display: flex; justify-content: space-between; font-size: 13px; padding: 2px 0; color: var(--text-muted); }
+.chaos-stat-row span:last-child { color: var(--text); font-family: monospace; }

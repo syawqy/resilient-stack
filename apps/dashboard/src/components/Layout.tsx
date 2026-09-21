@@ -9,6 +9,7 @@ interface LayoutProps {
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'config', label: 'Configuration' },
+  { id: 'chaos', label: 'Chaos Engineering' },
   { id: 'load-test', label: 'Load Test' },
   { id: 'scenarios', label: 'Scenarios' },
 ];

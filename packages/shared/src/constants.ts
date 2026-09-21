@@ -25,7 +25,7 @@ export const DEFAULT_CONFIG: GatewayConfig = {
   },
   circuitBreaker: {
     enabled: true,
-    threshold: 5,
+    threshold: 3,
     resetTimeoutMs: 10000,
   },
   retry: {
@@ -79,9 +79,9 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     description: 'Cascading failure across all services',
     config: {
       services: {
-        payment: { failRate: 0.7, latencyMs: 1000, forceFail: true },
-        notification: { failRate: 0.6, latencyMs: 800 },
-        order: { failRate: 0.5, latencyMs: 600 },
+        payment: { failRate: 0.9, latencyMs: 1500 },
+        notification: { failRate: 0.8, latencyMs: 1000 },
+        order: { failRate: 0.6, latencyMs: 800 },
       },
     },
   },
@@ -90,8 +90,8 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
     description: 'Notification service unavailable',
     config: {
       services: {
-        payment: { failRate: 0.01, latencyMs: 50, forceFail: false },
-        notification: { failRate: 1.0, latencyMs: 5000 },
+        payment: { failRate: 0.01, latencyMs: 50 },
+        notification: { failRate: 1.0, latencyMs: 200 },
         order: { failRate: 0.01, latencyMs: 20 },
       },
     },

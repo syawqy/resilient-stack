@@ -1,7 +1,8 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { PORTS } from '@resilient/shared';
-import { simulatePayment, setForceFailMode } from './simulator';
+import { simulatePayment } from './simulator';
+import { NetworkChaos, CascadingTimeout } from '@resilient/chaos';
 
 const app = new Hono();
 app.use('*', cors());
@@ -10,30 +11,63 @@ app.use('*', cors());
 let failRate = 0.1;
 let latencyMs = 100;
 
+// Chaos instances
+const networkChaos = new NetworkChaos();
+const cascadingTimeout = new CascadingTimeout();
+
 // Endpoint to update config
 app.post('/config', async (c) => {
-  const body = await c.req.json<{ failRate?: number; latencyMs?: number; forceFail?: boolean }>();
+  const body = await c.req.json<{
+    failRate?: number;
+    latencyMs?: number;
+    chaos?: {
+      network?: Partial<{ dropRate: number; baseLatencyMs: number; jitterMs: number; corruptRate: number; timeoutRate: number; timeoutMs: number }>;
+      cascading?: Partial<{ downstreamDelayMs: number; upstreamTimeoutMs: number; enabled: boolean }>;
+    };
+  }>();
   if (body.failRate !== undefined) failRate = body.failRate;
   if (body.latencyMs !== undefined) latencyMs = body.latencyMs;
-  if (body.forceFail !== undefined) setForceFailMode(body.forceFail);
+  if (body.chaos?.network) networkChaos.updateConfig(body.chaos.network);
+  if (body.chaos?.cascading) cascadingTimeout.updateConfig(body.chaos.cascading);
   return c.json({ success: true, failRate, latencyMs });
 });
 
-// Process payment
+// Chaos stats endpoint
+app.get('/chaos/stats', (c) => {
+  return c.json({
+    network: networkChaos.getStats(),
+    cascading: cascadingTimeout.getStats(),
+    networkConfig: networkChaos.getConfig(),
+    cascadingConfig: cascadingTimeout.getConfig(),
+  });
+});
+
+// Process payment (with chaos)
 app.post('/payments/process', async (c) => {
   const body = await c.req.json<{ orderId: string; amount: number }>();
 
   console.log(`[PaymentService] Processing payment for order ${body.orderId}, amount: ${body.amount}`);
 
-  const result = await simulatePayment(failRate, latencyMs);
+  // Apply network chaos (may throw ConnectionError, TimeoutError)
+  await networkChaos.beforeSend();
 
-  return c.json({
+  // Apply cascading timeout (may throw CascadingTimeoutError)
+  const result = await cascadingTimeout.callDownstream(() =>
+    simulatePayment(failRate, latencyMs)
+  );
+
+  let response = c.json({
     id: crypto.randomUUID(),
     orderId: body.orderId,
     amount: body.amount,
     status: result.success ? 'success' : 'failed',
     createdAt: new Date().toISOString(),
   });
+
+  // Apply response corruption
+  response = networkChaos.afterReceive(response) as any;
+
+  return response;
 });
 
 // Health

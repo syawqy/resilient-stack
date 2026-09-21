@@ -49,6 +49,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@resilient/cache": "workspace:*",
+        "@resilient/chaos": "workspace:*",
         "@resilient/shared": "workspace:*",
         "hono": "^4.6.0",
       },
@@ -57,12 +58,17 @@
       "name": "@resilient/svc-payment",
       "version": "1.0.0",
       "dependencies": {
+        "@resilient/chaos": "workspace:*",
         "@resilient/shared": "workspace:*",
         "hono": "^4.6.0",
       },
     },
     "packages/cache": {
       "name": "@resilient/cache",
+      "version": "1.0.0",
+    },
+    "packages/chaos": {
+      "name": "@resilient/chaos",
       "version": "1.0.0",
     },
     "packages/metrics": {
@@ -188,6 +194,8 @@
     "@napi-rs/lzma-linux-x64-gnu": ["@napi-rs/lzma-linux-x64-gnu@1.5.1", "", { "os": "linux", "cpu": "x64" }, "sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ=="],
 
     "@resilient/cache": ["@resilient/cache@workspace:packages/cache"],
+
+    "@resilient/chaos": ["@resilient/chaos@workspace:packages/chaos"],
 
     "@resilient/dashboard": ["@resilient/dashboard@workspace:apps/dashboard"],
 

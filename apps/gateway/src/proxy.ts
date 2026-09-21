@@ -52,6 +52,16 @@ export function createProxyHandler(
           try {
             response = await cb.execute(doFetch);
           } catch (err) {
+            // Always push CB state to metrics
+            collector.updateCircuitBreaker({
+              service: 'gateway',
+              target: serviceName,
+              state: cb.getState(),
+              failures: cb.getMetrics().failures,
+              successes: cb.getMetrics().successes,
+              lastFailureTime: cb.getMetrics().lastFailureTime,
+            });
+
             if (err instanceof Error && err.name === 'CircuitBreakerOpenError') {
               console.log(`[Proxy] Circuit breaker OPEN for ${serviceName}`);
               collector.recordRequest({
@@ -89,6 +99,18 @@ export function createProxyHandler(
           service: serviceName,
           success: response.ok,
         });
+
+        // Push CB state on success too
+        if (config.circuitBreaker.enabled && cb) {
+          collector.updateCircuitBreaker({
+            service: 'gateway',
+            target: serviceName,
+            state: cb.getState(),
+            failures: cb.getMetrics().failures,
+            successes: cb.getMetrics().successes,
+            lastFailureTime: cb.getMetrics().lastFailureTime,
+          });
+        }
 
         // Forward the response
         const body = await response.text();

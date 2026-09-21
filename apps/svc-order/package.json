@@ -8,6 +8,7 @@
   "dependencies": {
     "@resilient/shared": "workspace:*",
     "@resilient/cache": "workspace:*",
+    "@resilient/chaos": "workspace:*",
     "hono": "^4.6.0"
   }
 }
