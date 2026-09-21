@@ -20,9 +20,9 @@ function getStateStyle(state: string): { bg: string; text: string } {
 
 function getStateLabel(state: string): string {
   switch (state) {
-    case 'closed': return 'Tertutup';
-    case 'open': return 'Terbuka';
-    case 'half-open': return 'Setengah Terbuka';
+    case 'closed': return 'Closed';
+    case 'open': return 'Open';
+    case 'half-open': return 'Half-Open';
     default: return state;
   }
 }
@@ -30,9 +30,9 @@ function getStateLabel(state: string): string {
 export function CircuitBreakerPanel({ circuitBreakers }: CircuitBreakerPanelProps) {
   return (
     <div className="panel">
-      <h2 className="panel-title">Pemutus Sirkuit</h2>
+      <h2 className="panel-title">Circuit Breaker</h2>
       {circuitBreakers.length === 0 ? (
-        <p className="empty-message">Belum ada data pemutus sirkuit</p>
+        <p className="empty-message">No circuit breaker data yet</p>
       ) : (
         <div className="cb-grid">
           {circuitBreakers.map((cb) => {
@@ -47,16 +47,16 @@ export function CircuitBreakerPanel({ circuitBreakers }: CircuitBreakerPanelProp
                 </div>
                 <div className="cb-body">
                   <div className="cb-stat">
-                    <span className="cb-stat-label">Gagal</span>
+                    <span className="cb-stat-label">Failed</span>
                     <span className="cb-stat-value">{cb.failures}</span>
                   </div>
                   <div className="cb-stat">
-                    <span className="cb-stat-label">Berhasil</span>
+                    <span className="cb-stat-label">Succeeded</span>
                     <span className="cb-stat-value">{cb.successes}</span>
                   </div>
                   {cb.lastFailureTime && (
                     <div className="cb-stat">
-                      <span className="cb-stat-label">Terakhir Gagal</span>
+                      <span className="cb-stat-label">Last Failure</span>
                       <span className="cb-stat-value cb-stat-small">
                         {new Date(cb.lastFailureTime).toLocaleTimeString('id-ID')}
                       </span>

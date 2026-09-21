@@ -43,7 +43,7 @@ export const DEFAULT_CONFIG: GatewayConfig = {
 export const SCENARIO_PRESETS: ScenarioPreset[] = [
   {
     name: 'healthy',
-    description: 'Semua layanan berjalan normal',
+    description: 'All services running normally',
     config: {
       services: {
         payment: { failRate: 0.01, latencyMs: 50 },
@@ -54,7 +54,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
   },
   {
     name: 'payment-failure',
-    description: 'Layanan pembayaran mengalami gangguan',
+    description: 'Payment service experiencing failures',
     config: {
       services: {
         payment: { failRate: 0.8, latencyMs: 500 },
@@ -65,7 +65,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
   },
   {
     name: 'high-latency',
-    description: 'Semua layanan lambat karena beban tinggi',
+    description: 'All services running slowly under high load',
     config: {
       services: {
         payment: { failRate: 0.05, latencyMs: 2000 },
@@ -76,7 +76,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
   },
   {
     name: 'cascading-failure',
-    description: 'Kegagalan berantai di seluruh layanan',
+    description: 'Cascading failure across all services',
     config: {
       services: {
         payment: { failRate: 0.7, latencyMs: 1000 },
@@ -87,7 +87,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
   },
   {
     name: 'notification-down',
-    description: 'Layanan notifikasi tidak tersedia',
+    description: 'Notification service unavailable',
     config: {
       services: {
         payment: { failRate: 0.01, latencyMs: 50 },
@@ -98,7 +98,7 @@ export const SCENARIO_PRESETS: ScenarioPreset[] = [
   },
   {
     name: 'normal',
-    description: 'Konfigurasi default dengan sedikit error',
+    description: 'Default configuration with moderate error rates',
     config: {
       services: {
         payment: { failRate: 0.1, latencyMs: 100 },

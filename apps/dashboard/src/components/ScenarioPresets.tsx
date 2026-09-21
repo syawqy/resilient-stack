@@ -7,12 +7,12 @@ interface Scenario {
 }
 
 const PRESETS: Scenario[] = [
-  { name: 'healthy', description: 'Semua layanan berjalan normal' },
-  { name: 'payment-failure', description: 'Layanan pembayaran mengalami gangguan' },
-  { name: 'high-latency', description: 'Semua layanan lambat' },
-  { name: 'cascading-failure', description: 'Kegagalan berantai' },
-  { name: 'notification-down', description: 'Layanan notifikasi mati' },
-  { name: 'normal', description: 'Konfigurasi default' },
+  { name: 'healthy', description: 'All services running normally' },
+  { name: 'payment-failure', description: 'Payment service experiencing failures' },
+  { name: 'high-latency', description: 'All services running slowly' },
+  { name: 'cascading-failure', description: 'Cascading failure across services' },
+  { name: 'notification-down', description: 'Notification service down' },
+  { name: 'normal', description: 'Default configuration' },
 ];
 
 export function ScenarioPresets() {
@@ -32,7 +32,7 @@ export function ScenarioPresets() {
 
   return (
     <div className="panel">
-      <h2 className="panel-title">Skenario Preset</h2>
+      <h2 className="panel-title">Scenario Presets</h2>
       <div className="scenario-grid">
         {PRESETS.map((preset) => (
           <button

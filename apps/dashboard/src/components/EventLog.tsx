@@ -14,10 +14,10 @@ export function EventLog() {
 
   return (
     <div className="panel event-log-panel">
-      <h2 className="panel-title">Log Peristiwa</h2>
+      <h2 className="panel-title">Event Log</h2>
       <div className="event-log">
         {entries.length === 0 ? (
-          <p className="empty-message">Menunggu peristiwa...</p>
+          <p className="empty-message">Waiting for events...</p>
         ) : (
           entries.map((entry, i) => (
             <div key={i} className={`log-entry ${getSeverityClass(entry.severity)}`}>

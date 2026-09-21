@@ -22,10 +22,10 @@ function getStatusColor(status: string): string {
 
 function getStatusLabel(status: string): string {
   switch (status) {
-    case 'healthy': return 'Sehat';
-    case 'degraded': return 'Terkurangi';
-    case 'down': return 'Mati';
-    default: return 'Tidak Diketahui';
+    case 'healthy': return 'Healthy';
+    case 'degraded': return 'Degraded';
+    case 'down': return 'Down';
+    default: return 'Unknown';
   }
 }
 
@@ -58,11 +58,11 @@ export function StatusGrid({ services }: StatusGridProps) {
               </span>
             </div>
             <div className="status-detail">
-              <span className="status-label">Waktu Respon</span>
+              <span className="status-label">Response Time</span>
               <span className="status-value">{svc.responseTime.toFixed(0)}ms</span>
             </div>
             <div className="status-detail">
-              <span className="status-label">Total Request</span>
+              <span className="status-label">Total Requests</span>
               <span className="status-value">{svc.requestCount}</span>
             </div>
             <div className="status-detail">

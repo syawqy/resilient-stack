@@ -15,21 +15,21 @@ export function LoadTestPanel() {
         '/api/load-test',
         { requests: requestCount, rate }
       );
-      setLastResult(`Dimulai: ${res.total} request, ${res.rate}/detik`);
+      setLastResult(`Started: ${res.total} requests, ${res.rate}/sec`);
     } catch (err) {
-      setLastResult(`Gagal: ${err instanceof Error ? err.message : 'unknown error'}`);
+      setLastResult(`Failed: ${err instanceof Error ? err.message : 'unknown error'}`);
     }
     setTimeout(() => setRunning(false), 2000);
   };
 
   return (
     <div className="panel">
-      <h2 className="panel-title">Uji Beban</h2>
+      <h2 className="panel-title">Load Test</h2>
 
       <div className="load-test-form">
         <div className="slider-row">
           <label className="slider-label">
-            Jumlah Request: {requestCount}
+            Request Count: {requestCount}
           </label>
           <input
             type="range"
@@ -43,7 +43,7 @@ export function LoadTestPanel() {
 
         <div className="slider-row">
           <label className="slider-label">
-            Laju: {rate} request/detik
+            Rate: {rate} req/sec
           </label>
           <input
             type="range"
@@ -60,7 +60,7 @@ export function LoadTestPanel() {
           onClick={startLoadTest}
           disabled={running}
         >
-          {running ? 'Memproses...' : 'Jalankan Uji Beban'}
+          {running ? 'Running...' : 'Start Load Test'}
         </button>
 
         {lastResult && (

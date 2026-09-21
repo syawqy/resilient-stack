@@ -78,23 +78,23 @@ export function MetricsCharts({
 }: MetricsChartsProps) {
   return (
     <div className="metrics-charts">
-      <h2 className="panel-title">Metrik Real-time</h2>
+      <h2 className="panel-title">Real-time Metrics</h2>
       <div className="charts-grid">
         <MiniChart
           data={requestsPerSecond}
-          label="Request/detik"
+          label="Requests/sec"
           unit="/s"
           color="var(--blue)"
         />
         <MiniChart
           data={avgResponseTime}
-          label="Waktu Respon Rata-rata"
+          label="Avg Response Time"
           unit="ms"
           color="var(--cyan)"
         />
         <MiniChart
           data={errorRate.map((v) => v * 100)}
-          label="Tingkat Error"
+          label="Error Rate"
           unit="%"
           color="var(--red)"
           max={100}

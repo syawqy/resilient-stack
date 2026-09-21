@@ -7,10 +7,10 @@ interface LayoutProps {
 }
 
 const NAV_ITEMS = [
-  { id: 'dashboard', label: 'Dasbor' },
-  { id: 'config', label: 'Konfigurasi' },
-  { id: 'load-test', label: 'Uji Beban' },
-  { id: 'scenarios', label: 'Skenario' },
+  { id: 'dashboard', label: 'Dashboard' },
+  { id: 'config', label: 'Configuration' },
+  { id: 'load-test', label: 'Load Test' },
+  { id: 'scenarios', label: 'Scenarios' },
 ];
 
 export function Layout({ children, activeView, onNavigate }: LayoutProps) {

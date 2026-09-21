@@ -38,11 +38,11 @@ export function ConfigPanel({ onConfigChange }: ConfigPanelProps) {
 
   return (
     <div className="panel">
-      <h2 className="panel-title">Konfigurasi Live</h2>
+      <h2 className="panel-title">Live Configuration</h2>
 
       <div className="config-toggles">
         <label className="toggle-row">
-          <span className="toggle-label">Pembatas Laju</span>
+          <span className="toggle-label">Rate Limiter</span>
           <input
             type="checkbox"
             checked={rateLimiterEnabled}
@@ -64,7 +64,7 @@ export function ConfigPanel({ onConfigChange }: ConfigPanelProps) {
         </label>
 
         <label className="toggle-row">
-          <span className="toggle-label">Pemutus Sirkuit</span>
+          <span className="toggle-label">Circuit Breaker</span>
           <input
             type="checkbox"
             checked={circuitBreakerEnabled}
@@ -75,7 +75,7 @@ export function ConfigPanel({ onConfigChange }: ConfigPanelProps) {
         </label>
 
         <label className="toggle-row">
-          <span className="toggle-label">Percobaan Ulang</span>
+          <span className="toggle-label">Retry</span>
           <input
             type="checkbox"
             checked={retryEnabled}
@@ -86,11 +86,11 @@ export function ConfigPanel({ onConfigChange }: ConfigPanelProps) {
         </label>
       </div>
 
-      <h3 className="config-section-title">Layanan Pembayaran</h3>
+      <h3 className="config-section-title">Payment Service</h3>
       <div className="config-sliders">
         <div className="slider-row">
           <label className="slider-label">
-            Tingkat Error: {paymentFailRate}%
+            Fail Rate: {paymentFailRate}%
           </label>
           <input
             type="range"
@@ -103,7 +103,7 @@ export function ConfigPanel({ onConfigChange }: ConfigPanelProps) {
         </div>
         <div className="slider-row">
           <label className="slider-label">
-            Latensi: {paymentLatency}ms
+            Latency: {paymentLatency}ms
           </label>
           <input
             type="range"
@@ -117,11 +117,11 @@ export function ConfigPanel({ onConfigChange }: ConfigPanelProps) {
         </div>
       </div>
 
-      <h3 className="config-section-title">Layanan Notifikasi</h3>
+      <h3 className="config-section-title">Notification Service</h3>
       <div className="config-sliders">
         <div className="slider-row">
           <label className="slider-label">
-            Tingkat Error: {notifFailRate}%
+            Fail Rate: {notifFailRate}%
           </label>
           <input
             type="range"
@@ -134,7 +134,7 @@ export function ConfigPanel({ onConfigChange }: ConfigPanelProps) {
         </div>
         <div className="slider-row">
           <label className="slider-label">
-            Latensi: {notifLatency}ms
+            Latency: {notifLatency}ms
           </label>
           <input
             type="range"
@@ -153,7 +153,7 @@ export function ConfigPanel({ onConfigChange }: ConfigPanelProps) {
         onClick={saveConfig}
         disabled={saving}
       >
-        {saving ? 'Menyimpan...' : 'Simpan Konfigurasi'}
+        {saving ? 'Saving...' : 'Save Configuration'}
       </button>
     </div>
   );
