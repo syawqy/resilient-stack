@@ -46,6 +46,23 @@ function initLoadBalancers(): void {
   loadBalancers.set('notification', notificationLb);
 }
 
+async function propagateConfig(): Promise<void> {
+  const svcConfig = currentConfig.services;
+  const targets = [
+    { url: `http://localhost:${PORTS.payment}/config`, body: svcConfig.payment },
+    { url: `http://localhost:${PORTS.notification}/config`, body: svcConfig.notification },
+  ];
+  for (const t of targets) {
+    try {
+      await fetch(t.url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(t.body),
+      });
+    } catch { /* service may be down */ }
+  }
+}
+
 initCircuitBreakers();
 initLoadBalancers();
 
@@ -159,6 +176,7 @@ app.post('/api/config', async (c) => {
       ...currentConfig.services,
       ...body.services,
     };
+    propagateConfig();
   }
   return c.json({ success: true, config: currentConfig });
 });
@@ -179,6 +197,7 @@ app.post('/api/scenarios/:name', (c) => {
       ...currentConfig.services,
       ...preset.config.services,
     };
+    propagateConfig();
   }
   return c.json({ success: true, activated: name, config: currentConfig });
 });
